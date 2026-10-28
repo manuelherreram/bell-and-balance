@@ -1,0 +1,111 @@
+---
+import Icon from '../components/Icon.astro';
+import '../styles/global.css';
+interface Props {
+  title: string;
+  description?: string;
+  active?: string;
+}
+const {
+  title,
+  description = 'A four-week kettlebell program for strength, skill, and lasting fitness. Four days. One bell. Your own pace.',
+  active = 'program',
+} = Astro.props;
+const links = [
+  ['program', '/', 'Your program', 'grid'],
+  ['movements', '/movements/', 'Movements', 'play'],
+  ['guide', '/guide/', 'Training guide', 'book'],
+  ['progress', '/progress/', 'Your progress', 'chart'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f3ed" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} · Bell & Balance</title>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Bell and Balance home">
+          <span class="brand-mark">
+            <Icon name="bell" size={24} />
+          </span>
+          <span>
+            BELL <i>&</i> BALANCE
+            <span class="brand-sub">STRONGER, FOR LIFE.</span>
+          </span>
+        </a>
+        <nav aria-label="Main navigation">
+          {links.map(([id, url, label, icon]) => (
+            <a
+              href={url}
+              class:list={['nav-link', { active: active === id }]}
+              aria-current={active === id ? 'page' : undefined}
+            >
+              <Icon name={icon} size={17} />
+              <span>{label}</span>
+            </a>
+          ))}
+        </nav>
+        <div class="header-profile">
+          <span class="online-dot"></span>
+          <span>MANUEL’S PLAN</span>
+          <span class="avatar">M</span>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div>
+        <a class="footer-brand" href="/">
+          BELL & BALANCE<span>One bell. A stronger everyday.</span>
+        </a>
+        <p>
+          An original four-week plan inspired by{' '}
+          <a href="https://en.lebestark.ch/" target="_blank" rel="noreferrer">
+            Lebe Stark’s training approach ↗
+          </a>
+          .
+        </p>
+      </div>
+      <div>
+        <a href="/guide/#recovery">Train with care</a>
+        <a href="/guide/#sources">Sources & credits</a>
+        <a href="/downloads/program.pdf" download>
+          Printable program ↓
+        </a>
+        <span>Progress stays on this device.</span>
+      </div>
+    </footer>
+    <dialog
+      id="movement-dialog"
+      class="movement-dialog"
+      aria-labelledby="movement-dialog-title"
+    >
+      <button
+        class="icon-button dialog-close"
+        data-close-dialog
+        aria-label="Close movement details"
+      >
+        <Icon name="close" />
+      </button>
+      <div id="movement-dialog-content"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+      import '../scripts/shared';
+    </script>
+  </body>
+</html>

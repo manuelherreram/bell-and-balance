@@ -1,0 +1,312 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import MovementCard from '../components/MovementCard.astro';
+import { movements } from '../data/movements';
+import { workouts, weeks, minutes } from '../data/program';
+---
+
+<Layout title="Your four-week program">
+  <div class="container">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow rust">
+          <span class="dash"></span> YOUR NEXT FOUR WEEKS
+        </div>
+        <h1>
+          One bell.
+          <br />A stronger
+          <br />
+          <em>everyday.</em>
+        </h1>
+        <p>
+          Strength, skill, and a little more energy for life. Your four-day
+          kettlebell plan, built around you and your 16 kg bell.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#program">
+            Find your session <Icon name="arrow" size={16} />
+          </a>
+          <a class="text-link" href="/guide/">
+            How it works <Icon name="diagonal" size={13} />
+          </a>
+        </div>
+        <div class="hero-note">
+          <Icon name="heart" size={13} /> Steady progress. Comfortable movement.
+          Room to recover.
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img
+          src="https://images.unsplash.com/photo-1653647358769-c0465db60293?auto=format&fit=crop&w=1400&q=85"
+          alt="A kettlebell ready for a strength training session"
+          width="700"
+          height="470"
+          fetchpriority="high"
+        />
+        <div class="visual-top">
+          <span>YOUR SPACE. YOUR PACE.</span>
+          <span class="pill">16 KG / ONE BELL</span>
+        </div>
+        <div class="visual-bottom">
+          <div>
+            <strong>Built for the long run.</strong>
+            <p>Simple sessions. Purposeful movement.</p>
+          </div>
+          <a
+            href="/movements/"
+            class="round-arrow"
+            aria-label="Explore movement library"
+          >
+            <Icon name="diagonal" size={18} />
+          </a>
+        </div>
+      </div>
+    </section>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>04</strong>
+        <div>
+          <b>Weeks to build</b>A fresh training block
+        </div>
+      </div>
+      <div class="hero-stat">
+        <strong>04</strong>
+        <div>
+          <b>Days a week</b>Strength + athletic skill
+        </div>
+      </div>
+      <div class="hero-stat">
+        <strong>20–30</strong>
+        <div>
+          <b>Minutes a session</b>Warm-up included
+        </div>
+      </div>
+      <div class="hero-stat">
+        <strong>01</strong>
+        <div>
+          <b>Kettlebell needed</b>Your 16 kg bell
+        </div>
+      </div>
+    </div>
+    <section class="program" id="program">
+      <div class="program-heading">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">A LITTLE CONSISTENCY GOES A LONG WAY</div>
+            <h2>Your weekly rhythm.</h2>
+          </div>
+          <div class="week-bar" role="group" aria-label="Choose training week">
+            {weeks.map((w) => (
+              <button
+                class:list={['week-button', { active: w.number === 1 }]}
+                data-week={w.number}
+                aria-pressed={w.number === 1}
+              >
+                Week {w.number}
+                <span>{w.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <p class="week-context" id="week-context">
+          <b>Week 1 · Establish.</b> {weeks[0].text}
+        </p>
+      </div>
+      <div class="day-grid">
+        {workouts.map((w) => (
+          <button
+            class:list={['day-card', { selected: w.day === 1 }]}
+            data-day={w.day}
+            aria-pressed={w.day === 1}
+          >
+            <span class="day-check" aria-label="Logged">
+              ✓
+            </span>
+            <span class="day-top">
+              <span class="number">DAY 0{w.day}</span>
+              <span class="day-symbol">
+                <Icon name={w.icon} size={18} />
+              </span>
+            </span>
+            <span class="weekday">{w.weekday}</span>
+            <h3>{w.name}</h3>
+            <span class="kind">{w.kind}</span>
+            <span class="day-card-bottom">
+              <span>
+                <Icon name="clock" size={12} />
+                <span data-duration={w.day}>{minutes(w.day, 1)} min</span>
+              </span>
+              <span class="selected-label">
+                {w.day === 1 ? 'SELECTED' : 'VIEW SESSION ↗'}
+              </span>
+            </span>
+          </button>
+        ))}
+      </div>
+      <div class="session-layout">
+        <div class="session-panel" id="session-panel" aria-live="polite"></div>
+        <aside class="session-sidebar">
+          <div class="timer-card">
+            <div class="eyebrow">
+              <Icon name="clock" size={14} /> READY WHEN YOU ARE
+            </div>
+            <div class="timer-digits" id="session-duration">
+              27:00
+            </div>
+            <p>Your complete session</p>
+            <div class="timer-divider"></div>
+            <div class="timer-meta">
+              <span>Suggested effort</span>
+              <strong id="session-effort">6–8 / 10</strong>
+            </div>
+            <div class="timer-meta">
+              <span>Equipment</span>
+              <strong>1 × 16 kg KB</strong>
+            </div>
+            <button class="button full" id="start-session">
+              <Icon name="play" size={15} /> Start guided timer
+            </button>
+            <label class="short-toggle">
+              Short on time? Use the 20-minute version
+              <input type="checkbox" id="short-session" />
+            </label>
+          </div>
+          <div class="note-card">
+            <h4>
+              <Icon name="heart" size={16} /> Leave a little in reserve.
+            </h4>
+            <p>
+              Keep 2–3 strength reps in reserve. Finish each set early enough to
+              rest. Repeat the starting reps whenever recovery needs it.
+            </p>
+            <a href="/guide/#recovery">
+              Your knee & recovery checks <Icon name="arrow" size={13} />
+            </a>
+          </div>
+          <a
+            id="log-session"
+            class="button secondary log-button"
+            href="/progress/?week=1&day=1"
+          >
+            Log this session <Icon name="check" size={14} />
+          </a>
+        </aside>
+      </div>
+      <noscript>
+        <p>
+          Please enable JavaScript to choose sessions and use the timer. You can
+          also{' '}
+          <a href="/downloads/program.pdf">
+            read the complete printable program
+          </a>
+          .
+        </p>
+      </noscript>
+    </section>
+    <section class="library-preview">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">GOOD REPS START HERE</div>
+          <h2>Make every rep count.</h2>
+        </div>
+        <a href="/movements/" class="text-link">
+          All 11 movements <Icon name="arrow" size={15} />
+        </a>
+      </div>
+      <div class="movement-grid preview">
+        {[movements[3], movements[0], movements[1]].map((m) => (
+          <MovementCard movement={m} />
+        ))}
+      </div>
+    </section>
+    <div class="principles">
+      <div class="principle">
+        <Icon name="strength" />
+        <div>
+          <h4>Strength with intention</h4>
+          <p>
+            Balanced pushes, pulls, squats, hinges, and carries across the week.
+          </p>
+        </div>
+      </div>
+      <div class="principle">
+        <Icon name="wave" />
+        <div>
+          <h4>A rhythm you can repeat</h4>
+          <p>Two strength days, an easier day, and an athletic skill day.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <Icon name="heart" />
+        <div>
+          <h4>Recovery is part of the plan</h4>
+          <p>Flexible reps, practical swaps, and a lighter fourth week.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <dialog id="timer-dialog" class="timer-dialog" aria-labelledby="timer-title">
+    <button
+      class="icon-button dialog-close"
+      id="close-timer"
+      aria-label="Close and pause timer"
+    >
+      ×
+    </button>
+    <div class="timer-top">
+      <div class="eyebrow" id="timer-week">
+        WEEK 1 / DAY 1
+      </div>
+      <h2 id="timer-title">Press, squat & pull</h2>
+    </div>
+    <div class="timer-stage">
+      <div class="timer-phase" id="timer-phase">
+        WARM-UP
+      </div>
+      <div
+        class="timer-clock"
+        id="timer-clock"
+        aria-label="Time remaining in interval"
+      >
+        01:00
+      </div>
+      <h3 id="timer-move">March & mobilize</h3>
+      <div class="dose" id="timer-dose"></div>
+      <p class="cue" id="timer-cue"></p>
+    </div>
+    <div class="timer-progress">
+      <div id="timer-progress"></div>
+    </div>
+    <div class="timer-session-stats">
+      <span id="timer-step"></span>
+      <span id="timer-total"></span>
+    </div>
+    <div class="timer-controls">
+      <button class="button secondary" id="timer-pause">
+        Pause
+      </button>
+      <button class="button" id="timer-rest">
+        Reps done · rest
+      </button>
+      <button class="button secondary" id="timer-next">
+        Next interval →
+      </button>
+    </div>
+    <div class="timer-next">
+      Up next: <strong id="timer-upnext"></strong>
+    </div>
+    <div class="timer-footer">
+      <button id="timer-reset">Restart session</button>
+      <button id="timer-sound" aria-pressed="false">
+        Sound off
+      </button>
+    </div>
+    <a id="timer-log" class="button full" href="/progress/" hidden>
+      Finish & log session →
+    </a>
+  </dialog>
+  <script>
+    import '../scripts/program';
+  </script>
+</Layout>

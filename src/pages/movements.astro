@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import MovementCard from '../components/MovementCard.astro';
+import { movements } from '../data/movements';
+---
+
+<Layout title="Movement library" active="movements">
+  <div class="container">
+    <div class="page-intro">
+      <div class="eyebrow rust">
+        <span class="dash"></span> YOUR MOVEMENT LIBRARY
+      </div>
+      <h1>
+        Good technique.
+        <br />
+        Better training.
+      </h1>
+      <p>
+        Eleven movements, clear coaching cues, and practical alternatives. Watch
+        a demonstration, rehearse a few easy reps, then train with control.
+      </p>
+    </div>
+    <section class="library-main">
+      <div class="library-toolbar">
+        <label class="search-box">
+          <Icon name="search" size={17} />
+          <input
+            id="movement-search"
+            type="search"
+            placeholder="Find a movement…"
+            aria-label="Search movements"
+          />
+        </label>
+        <div class="filter-list" role="group" aria-label="Filter movements">
+          {['All', 'Push', 'Pull', 'Squat', 'Hinge', 'Carry', 'Power'].map(
+            (c, i) => (
+              <button
+                class:list={['filter-button', { active: i === 0 }]}
+                data-filter={c}
+                aria-pressed={i === 0}
+              >
+                {c}
+              </button>
+            ),
+          )}
+        </div>
+      </div>
+      <p class="library-count" id="library-count" aria-live="polite">
+        11 movements · technique, video & replacements
+      </p>
+      <div class="movement-grid" id="movement-library">
+        {movements.map((m) => (
+          <MovementCard movement={m} />
+        ))}
+        <div class="empty-state" id="library-empty" hidden>
+          <h3>No movements found.</h3>
+          <p>Try a different search or choose “All”.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

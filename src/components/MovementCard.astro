@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import type { Movement } from '../data/movements';
+const { movement: m } = Astro.props as { movement: Movement };
+const thumb =
+  m.video.provider === 'youtube'
+    ? `https://i.ytimg.com/vi/${m.video.id}/hqdefault.jpg`
+    : 'https://i.vimeocdn.com/video/1471664345-80ae31e2514cb0b40f838a2cfe8d60ac191276b1450a02f9b7d907d1b5ed1f53-d_640';
+---
+
+<article
+  class="movement-card"
+  data-category={m.category}
+  data-search={`${m.name} ${m.category} ${m.muscles}`.toLowerCase()}
+>
+  <button
+    class="media-thumb"
+    data-movement={m.id}
+    aria-label={`Watch ${m.name} and read technique`}
+  >
+    <img
+      src={thumb}
+      alt={`${m.name} video demonstration by ${m.video.author}`}
+      loading="lazy"
+      width="480"
+      height="270"
+    />
+    <span class="play-circle">
+      <Icon name="play" size={18} />
+    </span>
+    <span class="thumb-label">{m.video.author.toUpperCase()} · VIDEO</span>
+  </button>
+  <div class="movement-card-content">
+    <div class="eyebrow">
+      {m.category} / {m.level}
+    </div>
+    <h3>{m.name}</h3>
+    <p>{m.cue}</p>
+    <button
+      class="text-link"
+      style="border-top:0;border-left:0;border-right:0;background:none;padding-left:0"
+      data-movement={m.id}
+    >
+      Technique & swaps <Icon name="diagonal" size={13} />
+    </button>
+  </div>
+</article>

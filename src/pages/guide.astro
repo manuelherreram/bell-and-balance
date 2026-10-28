@@ -1,0 +1,319 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+const formats = [
+  [
+    'EMOM',
+    'Every minute on the minute',
+    'Your strength & easy days',
+    'Start the listed movement at the top of each minute. Complete the reps with control, then rest for the balance. The next minute is the next movement.',
+    'Minute 1: 4–5 left presses. Minute 2: 4–5 right presses. Aim to finish work by about :40. If you cannot, lower the reps.',
+  ],
+  [
+    'E2MOM',
+    'Every two minutes on the minute',
+    'Your athletic day',
+    'Start a station every two minutes. The longer window gives you time to change sides, finish quality reps, and recover.',
+    '0:00 clean & jerk; 2:00 snatch; 4:00 mixed complex. Finish each station by about 1:30, then rest at least 30 seconds.',
+  ],
+  [
+    'Complex',
+    'A sequence of movements',
+    'Your athletic day',
+    'Perform the prescribed movements in order. Some complexes are unbroken; in this plan you may park the bell and reset between movements.',
+    '10 swings → 6 goblet squats → 6 rows per side. Keep this inside the two-minute station. Reduce reps if you lose the rest.',
+  ],
+  [
+    'AMRAP',
+    'As many rounds as possible',
+    'Format reference',
+    'Repeat a fixed sequence for a set time. For sustainable training, choose a quality pace and take rest as needed; the clock is a limit, not a reason to rush.',
+    'Example only: 8 minutes alternating 5 deadlifts + 5 rows per side. Track smooth rounds. AMRAP is not prescribed in this block.',
+  ],
+  [
+    'For time',
+    'Fixed work, measured time',
+    'Format reference',
+    'Complete a prescribed amount of work and note how long it takes. A time cap limits the session. Technique and appropriate effort still come first.',
+    'Example only: 3 rounds of 8 deadlifts + 6 rows per side, with an 8-minute cap. Stop at the cap. This block has no for-time tests.',
+  ],
+  [
+    'Straight sets',
+    'Work, then recover',
+    'Format reference',
+    'Complete a set, rest for a chosen duration, then repeat. Useful when technique or a heavier load needs more recovery than an EMOM allows.',
+    'Example only: 3 sets of 5 strict presses per side, resting 60–90 seconds between sets. Use controlled reps; avoid failure.',
+  ],
+];
+const replacements = [
+  [
+    'Knee sensitive during squats',
+    'Chair squat',
+    '6–10 bodyweight reps to a stable chair at comfortable depth. Keep the same minute.',
+  ],
+  [
+    'Knee sensitive during jerk dip',
+    'Strict press',
+    '3 reps per side if comfortable, in the same two-minute station.',
+  ],
+  [
+    'Snatch catch or grip deteriorates',
+    'Single-arm clean',
+    '4 reps per side, then recover for the balance of the two minutes.',
+  ],
+  [
+    'Overhead motion uncomfortable',
+    'Floor press / deadlift',
+    'For strict press, use a comfortable floor press. For the snatch station, use 8–10 deadlifts. Stop movements that hurt.',
+  ],
+  [
+    'Swing rhythm or back fatigue',
+    'Two-handed deadlift',
+    '8–10 controlled reps in the same minute. Do not push through back pain.',
+  ],
+  [
+    'Floor setup unfamiliar',
+    'Push-ups + rest',
+    'On Day 3, do 6–15 push-ups in minute 3, then rest for minute 4. Elevate hands on a secure surface if needed.',
+  ],
+  [
+    'Kickstand balance interferes',
+    'Bilateral RDL',
+    '8 reps in each scheduled side minute; you may rest the second minute to reduce work.',
+  ],
+  [
+    'Small room or knee dislikes marching',
+    'Suitcase hold',
+    'Stay still: 20 seconds per side, park to change hands, then rest.',
+  ],
+];
+---
+
+<Layout title="Training guide" active="guide">
+  <div class="container">
+    <div class="page-intro">
+      <div class="eyebrow rust">
+        <span class="dash"></span> UNDERSTAND YOUR TRAINING
+      </div>
+      <h1>
+        A little clarity.
+        <br />A lot more confidence.
+      </h1>
+      <p>
+        Know what the clock means, how to adapt a movement, and when to
+        progress. Your session should fit your recovery as well as your
+        schedule.
+      </p>
+    </div>
+    <section class="guide-section" style="padding-top:0">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">THE FORMATS, EXPLAINED</div>
+          <h2>Work. Rest. Repeat.</h2>
+        </div>
+      </div>
+      <div class="formats-grid">
+        {formats.map(([name, full, use, body, example], i) => (
+          <article class:list={['format-card', { 'active-format': i < 3 }]}>
+            <span class:list={['pill', { olive: i < 3 }]}>{use}</span>
+            <h3>{name}</h3>
+            <div class="eyebrow" style="margin-bottom:12px">
+              {full}
+            </div>
+            <p>{body}</p>
+            <div class="format-example">
+              <strong>
+                {i < 3 ? 'In your program' : 'Illustrative example'}
+              </strong>
+              {example}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+    <section class="guide-section" id="progression">
+      <h2>Progress when you are ready.</h2>
+      <p>
+        Effort means perceived exertion on a 1–10 scale: 5–6 feels comfortable
+        to moderate; 7–8 is challenging but controlled; 10 is maximal. Reps in
+        reserve means how many more good repetitions you could do before
+        failure. Your strength work should usually finish with 2–3 left.
+      </p>
+      <p>
+        Week 1 establishes your baseline. In Week 2, Tuesday gains a round; try
+        the displayed rep increase on just one strength lift if recovery is
+        good. Week 3 offers small optional increases. You can keep the starting
+        reps on any station, even when the website displays a higher target.
+        Week 4 reduces the work to four 20-minute sessions.
+      </p>
+      <div class="cue-box">
+        Advance only when the reps are controlled, effort is within the day’s
+        range, and the knee feels normal during training and the next morning.
+        Keep 2–3 strength reps in reserve. If you need more rest, do fewer reps
+        or repeat a week.
+      </div>
+      <p>
+        The 20-minute toggle reduces the rounds and accessory work while
+        preserving a warm-up and recovery. Keep Monday and Thursday as strength
+        days, Tuesday easier, and Saturday skill-focused. Wednesday, Friday, and
+        Sunday are recovery days; comfortable walking is welcome.
+      </p>
+    </section>
+    <section class="guide-section" id="replacements">
+      <h2>A useful swap keeps the purpose.</h2>
+      <p>
+        Choose the alternative that suits the issue today. Keep the interval and
+        use the suggested dose; a replacement does not have to match the
+        original exercise rep for rep.
+      </p>
+      <div class="replacement-list">
+        {replacements.map(([when, swap, dose]) => (
+          <div class="replacement-item">
+            <strong>{when}</strong>
+            <strong class="arrow">→ {swap}</strong>
+            <p>{dose}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+    <section class="guide-section" id="recovery">
+      <h2>Train for the next session, too.</h2>
+      <div class="recovery-grid">
+        <article class="recovery-card">
+          <Icon name="heart" />
+          <h3>Listen to the knee.</h3>
+          <p>
+            You are currently pain-free. Keep it that way: use comfortable depth
+            and smooth reps. If pain appears or increases, stop that movement
+            and try a comfortable alternative. New swelling, locking, giving
+            way, or symptoms that persist into the next day call for a clinician
+            or physiotherapist review.
+          </p>
+        </article>
+        <article class="recovery-card">
+          <Icon name="strength" />
+          <h3>Protect your muscle.</h3>
+          <p>
+            Keep the strength sessions consistent and include protein across
+            meals. A practical range to discuss with your clinician or dietitian
+            is about 100–130 g/day, adjusted for appetite, overall intake, and
+            kidney health. Avoid aggressive calorie cuts; your recent gradual
+            weight loss is a reason to stay steady.
+          </p>
+        </article>
+        <article class="recovery-card">
+          <Icon name="wave" />
+          <h3>Keep the easy work easy.</h3>
+          <p>
+            Add comfortable walks as recovery allows. Hydrate and adjust
+            training if semaglutide causes nausea, vomiting, dizziness, or low
+            intake. New unexplained muscle pain or weakness while taking
+            rosuvastatin deserves medical advice; severe symptoms or dark urine
+            need urgent assessment.
+          </p>
+        </article>
+      </div>
+      <p style="margin-top:20px">
+        This is a training plan, not treatment for the knee or fatty liver.
+        Follow any exercise restrictions from your treating clinician and keep
+        your medication and follow-up plan with them.
+      </p>
+    </section>
+    <section class="guide-section bottom-space" id="sources">
+      <h2>Sources & credits.</h2>
+      <p>
+        An original plan informed by your training experience and preferences.
+        It is inspired by Lebe Stark’s accessible kettlebell approach and is not
+        an official Lebe Stark program or an endorsement.
+      </p>
+      <ul class="sources">
+        <li>
+          <a href="https://en.lebestark.ch/" target="_blank" rel="noreferrer">
+            Lebe Stark
+          </a>{' '}
+          — inspiration and linked movement tutorials. Each video names its
+          creator and links to the original.
+        </li>
+        <li>
+          Additional demonstrations:{' '}
+          <a href="https://www.e3rehab.com/" target="_blank" rel="noreferrer">
+            E3 Rehab
+          </a>
+          ,{' '}
+          <a
+            href="https://www.youtube.com/watch?v=ztXjknHC9NQ"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kathletics
+          </a>
+          ,{' '}
+          <a
+            href="https://www.youtube.com/watch?v=yXstm050X84"
+            target="_blank"
+            rel="noreferrer"
+          >
+            NASM
+          </a>
+          , and{' '}
+          <a
+            href="https://www.youtube.com/watch?v=N6Rvg3EH8mM"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Zack Henderson
+          </a>
+          .
+        </li>
+        <li>
+          <a
+            href="https://doi.org/10.1136/bjsports-2024-108110"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Best practice guide for patellofemoral pain
+          </a>{' '}
+          — education and individualized exercise.
+        </li>
+        <li>
+          <a
+            href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12125019/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Joint advisory on nutritional priorities during GLP-1 therapy
+          </a>{' '}
+          — nutrition and muscle preservation.
+        </li>
+        <li>
+          <a
+            href="https://link.springer.com/article/10.1007/s00125-024-06196-3"
+            target="_blank"
+            rel="noreferrer"
+          >
+            EASL–EASD–EASO MASLD guidance
+          </a>{' '}
+          — regular physical activity and resistance exercise.
+        </li>
+        <li>
+          Hero photograph via{' '}
+          <a href="https://unsplash.com/" target="_blank" rel="noreferrer">
+            Unsplash
+          </a>
+          . Demonstration videos and images remain with their creators.
+        </li>
+        <li>
+          <a href="/downloads/program.pdf" download>
+            Download your original printable four-week plan
+          </a>
+          .
+        </li>
+      </ul>
+      <p>
+        Videos load from YouTube or Vimeo only when you press play. Thumbnails
+        and the hero photograph load from external image services. Your session
+        journal is stored in this browser, with an export option.
+      </p>
+    </section>
+  </div>
+</Layout>
